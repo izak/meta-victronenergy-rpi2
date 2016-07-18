@@ -1,1 +1,0 @@
-SUBSYSTEM=="input", KERNEL=="event[0-9]*", ENV{ID_INPUT_KEY=1}=="1", SYMLINK+="input/by-path/platform-gpio-keys-event"

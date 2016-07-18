@@ -1,15 +1,12 @@
 # Specifically install a udev bridge for gui, on Rpi2 the keyboard is not where
 # you might expect it.
 
-SRC_URI = " \
-   file://keyboard.rules \
-"
 RDEPENDS_${PN} += "udev"
 
-
-do_install() {
+do_install_append() {
     install -d ${D}${sysconfdir}/udev/rules.d
-    install -m 0644 ${WORKDIR}/keyboard.rules ${D}${sysconfdir}/udev/rules.d/keyboard.rules
+    echo 'SUBSYSTEM=="input", KERNEL=="event0", SYMLINK+="input/by-path/platform-gpio-keys-event"' > \
+        ${D}${sysconfdir}/udev/rules.d/keyboard.rules
 }
 
-FILES_${PN} = "${sysconfdir}/udev/rules.d/keyboard.rules"
+FILES_${PN} += "${sysconfdir}/udev/rules.d/keyboard.rules"
